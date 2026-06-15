@@ -1,5 +1,6 @@
 {
   "name": "fpsbooster-server",
+<<<<<<< HEAD
   "version": "2.0.0",
   "description": "FPS Booster Pro Platform",
   "main": "server.js",
@@ -17,16 +18,36 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.17.0",
+=======
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+>>>>>>> fb6ddeb2b2c957d540d9ae5b7bc72eaa8d121d93
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
+<<<<<<< HEAD
     "mercadopago": "^2.13.0",
     "mongoose": "^8.24.0",
     "nodemailer": "^7.0.13"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
+=======
+    "mercadopago": "^2.12.0",
+    "mongoose": "^9.5.0"
+>>>>>>> fb6ddeb2b2c957d540d9ae5b7bc72eaa8d121d93
   }
 }
