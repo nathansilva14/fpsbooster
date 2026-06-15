@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard FPS Booster</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<h1 id="welcome">Carregando...</h1>
+
+<h2 id="plan">Carregando...</h2>
+
+<div class="card">
+<h3>Plano Atual</h3>
+<p id="userPlan">-</p>
+</div>
+
+<div class="card">
+<h3>Código de Convite</h3>
+<p id="inviteCode">-</p>
+</div>
+
+<div class="card">
+<h3>Indicações</h3>
+<p id="referrals">0 / 100</p>
+</div>
+
+<div class="card">
+<h3>Licença</h3>
+<p id="licenseKey">Nenhuma</p>
+</div>
+
+<div class="card">
+<h3>Expiração</h3>
+<p id="licenseExpires">-</p>
+</div>
+
+<div class="card">
+<h3>Downloads</h3>
+<p id="downloads">0</p>
+</div>
+
+<div class="card">
+<h3>Último Login</h3>
+<p id="lastLogin">-</p>
+</div>
+
+<div class="card">
+<h3>Próxima Recompensa</h3>
+<p>100 indicações = 1 Ano PRO</p>
+</div>
+
+<div class="card">
+<h3>Recompensas</h3>
+<p id="rewards">0 meses grátis</p>
+</div>
+
+
+<h3>Seu Link de Convite</h3>
+
+<input
+type="text"
+id="inviteLink"
+readonly>
+
+<br><br>
+
+<button onclick="copyInvite()">
+📋 Copiar Link
+</button>
+
+</div>
+
+<a href="#">
+<button onclick="logout()">
+🚪 Sair
+</button>
+</a>
+
+<div style="margin-top:20px;">
+
+<a href="licenses.html">
+<button>
+🔑 Minha Licença
+</button>
+</a>
+
+<a href="ranking.html">
+<button>
+🏆 Ranking
+</button>
+</a>
+
+<a href="plans.html">
+<button>
+💳 Planos
+</button>
+</a>
+
+<a href="/">
+<button>
+🏠 Site
+</button>
+</a>
+
+<button
+onclick="downloadApp()">
+
+⬇ Download
+
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+if(
+    !localStorage.getItem("token")
+){
+
+    window.location.href =
+    "/login.html";
+
+}    
+
+async function loadUser(){
+
+    const email =
+    localStorage.getItem("email");
+
+    if(!email){
+
+        window.location.href =
+        "/login.html";
+
+        return;
+
+    }
+
+    const res =
+    await fetch(
+        "/auth/user/" + email
+    );
+
+    const user =
+    await res.json();
+
+    document.getElementById(
+        "welcome"
+    ).innerText =
+    "Bem-vindo, " + user.name;
+
+    document.getElementById(
+        "plan"
+    ).innerText =
+    "Plano: " + user.plan;
+
+    document.getElementById(
+        "userPlan"
+    ).innerText =
+    user.plan;
+
+    document.getElementById(
+        "inviteCode"
+    ).innerText =
+    user.inviteCode;
+
+    document.getElementById(
+        "referrals"
+    ).innerText =
+    user.referrals + " / 100";
+
+   document.getElementById(
+    "rewards"
+).innerText =
+
+(user.rewards || 0) +
+" meses grátis";
+
+    document.getElementById(
+        "licenseKey"
+    ).innerText =
+    user.licenseKey || "Nenhuma";
+
+    document.getElementById(
+    "licenseExpires"
+).innerText =
+
+user.planExpires
+
+?
+
+new Date(
+    user.planExpires
+).toLocaleDateString()
+
+:
+
+"Sem expiração";
+
+    document.getElementById(
+        "downloads"
+    ).innerText =
+    user.downloads || 0;
+
+    document.getElementById(
+        "lastLogin"
+    ).innerText =
+    user.lastLogin
+    ?
+    new Date(
+        user.lastLogin
+    ).toLocaleString()
+    :
+    "-";
+
+    document.getElementById(
+        "inviteLink"
+    ).value =
+
+    window.location.origin +
+
+    "/register.html?invite=" +
+
+    user.inviteCode;
+
+}
+
+function copyInvite(){
+
+    navigator.clipboard.writeText(
+
+        document.getElementById(
+            "inviteLink"
+        ).value
+
+    );
+
+    alert(
+        "Link copiado!"
+    );
+
+}
+
+function logout(){
+
+    localStorage.clear();
+
+    window.location.href =
+    "/login.html";
+
+}
+
+async function downloadApp(){
+
+    const email =
+
+    localStorage.getItem(
+        "email"
+    );
+
+    window.location.href =
+
+    "/download/" +
+
+    email;
+
+}
+
+loadUser();
+
+</script>
+
+</body>
+</html>

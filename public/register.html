@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Cadastro FPS Booster</title>
+
+<link rel="stylesheet"
+href="style.css">
+
+</head>
+
+<body>
+
+<div class="auth-box">
+
+<h1>FPS BOOSTER PRO</h1>
+
+<h2>Criar Conta</h2>
+
+<input
+type="text"
+id="name"
+placeholder="Nome">
+
+<input
+type="email"
+id="email"
+placeholder="Email">
+
+<input
+type="password"
+id="password"
+placeholder="Senha">
+
+<input
+type="text"
+id="inviteCode"
+placeholder="Código de convite (opcional)">
+
+<button onclick="register()">
+Cadastrar
+</button>
+
+<p>
+
+Já possui conta?
+
+<a href="login.html">
+Entrar
+</a>
+
+</p>
+
+</div>
+
+<script>
+
+async function register(){
+
+    const name =
+    document.getElementById("name").value;
+
+    const email =
+    document.getElementById("email").value;
+
+    const password =
+    document.getElementById("password").value;
+
+    const inviteCode =
+    document.getElementById("inviteCode").value;
+
+    const res =
+    await fetch("/auth/register",{
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":
+            "application/json"
+        },
+
+        body:JSON.stringify({
+
+            name,
+            email,
+            password,
+            inviteCode
+
+        })
+
+    });
+
+    const data =
+    await res.json();
+
+    if(data.success){
+
+        alert(
+            "Cadastro realizado com sucesso!"
+        );
+
+        window.location.href =
+        "login.html";
+
+    }
+    else{
+
+        alert(
+            data.error ||
+            "Erro ao cadastrar"
+        );
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

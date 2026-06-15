@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Minha Licença</title>
+
+<link rel="stylesheet"
+href="style.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<h1>🔑 Minha Licença</h1>
+
+<div class="card">
+
+<h3>Chave</h3>
+
+<p id="licenseKey">
+Carregando...
+</p>
+
+<button onclick="copyKey()">
+Copiar Chave
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>Status</h3>
+
+<p id="status">
+ATIVA
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>Plano</h3>
+
+<p id="plan">
+FREE
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>Expiração</h3>
+
+<p id="expires">
+-
+</p>
+
+</div>
+
+<a href="dashboard.html">
+<button>
+⬅ Voltar
+</button>
+</a>
+
+</div>
+
+<script>
+
+async function loadLicense(){
+
+    const email =
+    localStorage.getItem(
+        "email"
+    );
+
+    const res =
+    await fetch(
+        "/auth/user/" + email
+    );
+
+    const user =
+    await res.json();
+
+    document.getElementById(
+        "licenseKey"
+    ).innerText =
+    user.licenseKey ||
+    "Nenhuma";
+
+    document.getElementById(
+        "plan"
+    ).innerText =
+    user.plan;
+
+}
+
+function copyKey(){
+
+    navigator.clipboard.writeText(
+
+        document.getElementById(
+            "licenseKey"
+        ).innerText
+
+    );
+
+    alert(
+        "Chave copiada!"
+    );
+
+}
+
+loadLicense();
+
+</script>
+
+</body>
+</html>

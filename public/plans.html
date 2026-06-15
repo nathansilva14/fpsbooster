@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Planos FPS Booster Pro</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<h1>🔥 PLANOS FPS BOOSTER PRO</h1>
+
+<h2>Escolha o plano ideal para turbinar seu PC</h2>
+
+<div class="plans">
+
+<div class="card">
+
+<h3>PRO 1 MÊS</h3>
+
+<span>R$ 19,90</span>
+
+<p>
+✔ Auto Boost Inteligente<br>
+✔ Otimização de FPS<br>
+✔ Atualizações Premium
+</p>
+
+<br>
+
+<button onclick="buy('PRO_1')">
+COMPRAR
+</button>
+
+</div>
+
+<div class="card destaque">
+
+<h3>PRO 3 MESES</h3>
+
+<span>R$ 45,00</span>
+
+<p>
+✔ Tudo do PRO<br>
+✔ Melhor custo-benefício<br>
+✔ Suporte prioritário
+</p>
+
+<br>
+
+<button onclick="buy('PRO_3')">
+🔥 MAIS VENDIDO
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>PRO ANUAL</h3>
+
+<span>R$ 99,90</span>
+
+<p>
+✔ Todos os recursos liberados<br>
+✔ Economia máxima<br>
+✔ Atualizações exclusivas
+</p>
+
+<br>
+
+<button onclick="buy('PRO_YEAR')">
+💎 ECONOMIZAR
+</button>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h3>Seu Plano Atual</h3>
+
+<p id="currentPlan">
+Carregando...
+</p>
+
+</div>
+
+<br>
+
+<a href="dashboard.html">
+<button>
+⬅ Voltar ao Dashboard
+</button>
+</a>
+
+</div>
+
+<script>
+
+document.getElementById(
+    "currentPlan"
+).innerText =
+localStorage.getItem("plan") ||
+"FREE";
+
+async function buy(plan){
+
+    const email =
+    localStorage.getItem("email");
+
+    if(!email){
+
+        alert(
+            "Faça login primeiro"
+        );
+
+        return;
+
+    }
+
+    try{
+
+        const res =
+        await fetch(
+
+            "/payment/create",
+
+            {
+
+                method:"POST",
+
+                headers:{
+
+                    "Content-Type":
+                    "application/json"
+
+                },
+
+                body:JSON.stringify({
+
+                    email,
+                    plan
+
+                })
+
+            }
+
+        );
+
+        const data =
+        await res.json();
+
+        if(data.success){
+
+            alert(
+
+                "Pagamento criado com sucesso!\n\n" +
+
+                "Plano: " + plan +
+
+                "\nValor: R$ " +
+
+                data.amount
+
+            );
+
+        }else{
+
+            alert(
+                data.error ||
+                "Erro ao criar pagamento"
+            );
+
+        }
+
+    }catch(err){
+
+        alert(
+            "Erro de conexão com o servidor"
+        );
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>

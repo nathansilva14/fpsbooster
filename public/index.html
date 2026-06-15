@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>FPS Booster Pro</title>
+
+<link rel="stylesheet"
+href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<nav>
+
+<h1>FPS BOOSTER PRO</h1>
+
+<div class="nav-buttons">
+
+<a href="#planos">
+Planos
+</a>
+
+<a href="#faq">
+FAQ
+</a>
+
+<a href="/login.html">
+<button class="download-btn">
+LOGIN
+</button>
+</a>
+
+<a href="/register.html">
+<button class="download-btn">
+CADASTRAR
+</button>
+</a>
+
+</div>
+
+</nav>
+
+</header>
+
+<section class="hero">
+
+<h2>
+
+MAIS FPS<br>
+MENOS LAG
+
+</h2>
+
+<p>
+
+Otimização inteligente para jogos competitivos.
+Ganhe desempenho máximo sem complicação.
+
+</p>
+
+<a href="/download">
+
+<button class="main-btn">
+
+BAIXAR GRÁTIS
+
+</button>
+
+</a>
+
+</section>
+
+<section class="features">
+
+<div class="feature">
+⚡ Auto Boost Inteligente
+</div>
+
+<div class="feature">
+🎮 Detecção Automática de Jogos
+</div>
+
+<div class="feature">
+🚀 Máximo Desempenho
+</div>
+
+<div class="feature">
+🛡️ Segurança Avançada
+</div>
+
+</section>
+
+<section id="planos">
+
+<h2>PLANOS PRO</h2>
+
+<div class="plans">
+
+<div class="card">
+
+<h3>PRO 1 MÊS</h3>
+
+<span>R$ 19,90</span>
+
+<button onclick="buy('PRO_1')">
+
+COMPRAR
+
+</button>
+
+</div>
+
+<div class="card destaque">
+
+<h3>PRO 3 MESES</h3>
+
+<span>R$ 45,00</span>
+
+<button onclick="buy('PRO_3')">
+
+🔥 MAIS VENDIDO
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>PRO ANUAL</h3>
+
+<span>R$ 99,90</span>
+
+<button onclick="buy('PRO_YEAR')">
+
+💎 ECONOMIZAR
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="compare">
+
+<h2>FREE VS PRO</h2>
+
+<table>
+
+<tr>
+
+<th>Função</th>
+<th>FREE</th>
+<th>PRO</th>
+
+</tr>
+
+<tr>
+
+<td>Boost Básico</td>
+<td>✔</td>
+<td>✔</td>
+
+</tr>
+
+<tr>
+
+<td>Auto Boost</td>
+<td>❌</td>
+<td>✔</td>
+
+</tr>
+
+<tr>
+
+<td>IA de Otimização</td>
+<td>❌</td>
+<td>✔</td>
+
+</tr>
+
+<tr>
+
+<td>Atualizações Prioritárias</td>
+<td>❌</td>
+<td>✔</td>
+
+</tr>
+
+</table>
+
+</section>
+
+<section id="faq">
+
+<h2>
+PERGUNTAS FREQUENTES
+</h2>
+
+<div class="faq-item">
+
+<h3>
+Funciona em qualquer PC?
+</h3>
+
+<p>
+Sim. Compatível com Windows 10 e 11.
+</p>
+
+</div>
+
+<div class="faq-item">
+
+<h3>
+Posso testar grátis?
+</h3>
+
+<p>
+Sim. Existe uma versão gratuita disponível.
+</p>
+
+</div>
+
+<div class="faq-item">
+
+<h3>
+É seguro?
+</h3>
+
+<p>
+Sim. O aplicativo não modifica arquivos de jogos.
+</p>
+
+</div>
+
+</section>
+
+<footer>
+
+<p>
+
+© FPS Booster Pro 2026
+
+</p>
+
+</footer>
+
+<script>
+
+async function buy(plan){
+
+    const email =
+    localStorage.getItem(
+        "email"
+    );
+
+    if(!email){
+
+        alert(
+            "Faça login primeiro"
+        );
+
+        window.location.href =
+        "/login.html";
+
+        return;
+
+    }
+
+    const res =
+    await fetch(
+
+        "/payment/create",
+
+        {
+
+            method:"POST",
+
+            headers:{
+
+                "Content-Type":
+                "application/json"
+
+            },
+
+            body:JSON.stringify({
+
+                email,
+                plan
+
+            })
+
+        }
+
+    );
+
+    const data =
+    await res.json();
+
+    if(data.success){
+
+        alert(
+
+            "Pagamento criado!\n\n" +
+
+            "Valor: R$ " +
+
+            data.amount
+
+        );
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>

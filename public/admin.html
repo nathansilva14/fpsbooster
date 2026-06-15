@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Admin</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<h1>PAINEL ADMIN</h1>
+
+<div class="card">
+
+    <h3>
+
+    Buscar Usuário
+
+    </h3>
+
+    <input
+
+    type="email"
+
+    id="searchEmail"
+
+    placeholder="Digite o email">
+
+    <button
+
+    onclick="searchUser()">
+
+    Buscar
+
+    </button>
+
+</div>
+
+<div id="searchResult"></div>
+
+<div class="card">
+Total Usuários:
+<span id="users">0</span>
+</div>
+
+<div class="card">
+Licenças:
+<span id="licenses">0</span>
+</div>
+
+<div class="card">
+Pagamentos:
+<span id="payments">0</span>
+</div>
+
+<div class="card">
+Pagamentos Aprovados:
+<span id="approved">0</span>
+</div>
+
+<div class="card">
+
+Receita Total:
+
+R$ <span id="revenue">0</span>
+
+</div>
+
+<div class="card">
+
+    Receita Mensal:
+
+    R$ <span id="monthlyRevenue">
+
+    0
+
+    </span>
+
+</div>
+
+<h2>Usuários</h2>
+
+<div id="usersList"></div>
+
+<h2>Licenças</h2>
+
+<div id="licensesList"></div>
+
+<h2>Pagamentos</h2>
+
+<div id="paymentsList"></div>
+
+<h2>
+
+🏆 Top Indicações
+
+</h2>
+
+<div id="topReferrals"></div>
+
+<h2>
+
+📋 Licenças Expiradas
+
+</h2>
+
+<div id="expiredLicenses"></div>
+
+<script src="admin.js"></script>
+
+</body>
+</html>
