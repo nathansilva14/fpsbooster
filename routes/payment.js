@@ -73,7 +73,7 @@ router.post("/create", async(req,res)=>{
 
 // APROVAR PAGAMENTO
 
-router.post("/approve/:id", async(req,res)=>{
+router.get("/approve/:id", async(req,res)=>{
 
     try{
 
@@ -84,38 +84,20 @@ router.post("/approve/:id", async(req,res)=>{
 
         if(!payment){
 
-            return res.status(404).json({
+            return res.json({
                 error:"Pagamento não encontrado"
             });
 
         }
 
-        if(payment.status === "APPROVED"){
-
-            return res.json({
-                success:true,
-                message:"Pagamento já aprovado"
-            });
-
-        }
-
-        payment.status = "APPROVED";
-
-        payment.approvedAt =
-        new Date();
-
-        await payment.save();
-
         const user =
         await User.findOne({
-
             email:payment.email
-
         });
 
         if(!user){
 
-            return res.status(404).json({
+            return res.json({
                 error:"Usuário não encontrado"
             });
 
@@ -130,21 +112,24 @@ router.post("/approve/:id", async(req,res)=>{
                 expiresAt.getMonth()+1
             );
 
-        }
-        else if(payment.plan === "PRO_3"){
+        }else if(payment.plan === "PRO_3"){
 
             expiresAt.setMonth(
                 expiresAt.getMonth()+3
             );
 
-        }
-        else{
+        }else{
 
             expiresAt.setFullYear(
                 expiresAt.getFullYear()+1
             );
 
         }
+
+        payment.status = "APPROVED";
+        payment.approvedAt = new Date();
+
+        await payment.save();
 
         const key =
         generateLicense();
@@ -158,11 +143,9 @@ router.post("/approve/:id", async(req,res)=>{
 
         });
 
-        user.plan =
-        payment.plan;
-
-        user.licenseKey =
-        key;
+        user.plan = payment.plan;
+        user.licenseKey = key;
+        user.planExpires = expiresAt;
 
         await user.save();
 
@@ -170,14 +153,18 @@ router.post("/approve/:id", async(req,res)=>{
 
             success:true,
             key,
-            expiresAt,
-            plan:payment.plan
+            plan:user.plan,
+            expiresAt
 
         });
 
     }catch(err){
 
-        res.status(500).json(err);
+        console.log(err);
+
+        res.status(500).json({
+            error:"Erro interno"
+        });
 
     }
 
@@ -211,7 +198,5 @@ router.get("/approve/:id", async(req,res)=>{
     });
 
 });
-
-module.exports = router;
 
 module.exports = router;
